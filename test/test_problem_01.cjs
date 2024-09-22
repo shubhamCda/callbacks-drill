@@ -4,4 +4,4 @@
 
 const create_and_delete = require("../problem_01.cjs");
 
-// console.log(create_and_delete);
+console.log(create_and_delete());
