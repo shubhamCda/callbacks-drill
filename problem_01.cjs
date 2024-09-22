@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 
-export function make_directory() {
+function make_directory() {
     
     fs.mkdir("./JSON_files", { recursive: true }, (err) =>{
         if (err) {
@@ -15,7 +15,7 @@ export function make_directory() {
     })
 }
 
-export function create_JSON_file() {
+function create_JSON_file() {
     fs.writeFile("./JSON_files/sample.json", "", (err) =>{
         if (err) {
             console.log(`Error: ${err}`);  
@@ -26,7 +26,7 @@ export function create_JSON_file() {
     })
 }
 
-export function delete_JSON_file() {
+function delete_JSON_file() {
     fs.unlink("./JSON_files/sample.json", (err) =>{
         if (err) {
             console.log(`Error: ${err}`);
@@ -36,3 +36,5 @@ export function delete_JSON_file() {
         }
     });
 }
+
+module.exports = make_directory;
