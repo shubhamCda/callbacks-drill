@@ -115,5 +115,5 @@ function async_function() {
     });   
 }
 
-async_function()
+module.exports = async_function;
 
