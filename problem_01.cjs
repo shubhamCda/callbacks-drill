@@ -3,7 +3,7 @@ const path = require("path");
 
 function make_directory() {
     
-    fs.mkdir("JSON_files", { recursive: true }, (err) =>{
+    fs.mkdir("JSON_files", {recursive : true} ,(err) =>{
         if (err) {
             console.log(`Error: ${err}`);
             
@@ -14,6 +14,7 @@ function make_directory() {
         }
     })
 }
+
 
 function create_JSON_file() {
     fs.writeFile("./JSON_files/sample.json", "", (err) =>{
