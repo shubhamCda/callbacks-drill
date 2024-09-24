@@ -3,12 +3,12 @@ const fs = require("fs");
 
 // 1. Read the given file lipsum.txt
 function read_file() {
-    
-    fs.readFile("/home/shubham/Desktop/JavaScript/callbacks/callbacks-drill/lipsum.txt", "utf-8", (err, result) =>{
+
+    fs.readFile("/home/shubham/Desktop/JavaScript/callbacks/callbacks-drill/lipsum.txt", "utf-8", (err, result) => {
         if (err) {
             console.log("Error: ", err);
-            
-        }else{
+
+        } else {
             console.log(result);
             convert__data_to_uppercase_and_write(result);
         }
@@ -22,40 +22,40 @@ function read_file() {
 function convert__data_to_uppercase_and_write(res) {
     let uppercase_content = res.toUpperCase();
     // console.log(uppercase_content);
-    
+
     const uppercase_file = "/home/shubham/Desktop/JavaScript/callbacks/callbacks-drill/upperCase.txt"
-    fs.writeFile(uppercase_file, uppercase_content, (err, result) =>{
+    fs.writeFile(uppercase_file, uppercase_content, (err, result) => {
         if (err) {
             console.log("Error: ", err);
-        }else{
+        } else {
             console.log(`write successfull...`);
-           
-            
+
+
         }
-        
+
     });
 
-    fs.writeFile("/home/shubham/Desktop/JavaScript/callbacks/callbacks-drill/filenames.txt", "upperCase.txt", (err) =>{
+    fs.writeFile("/home/shubham/Desktop/JavaScript/callbacks/callbacks-drill/filenames.txt", "upperCase.txt", (err) => {
         if (err) {
             console.log(err);
-            
-        }else{
+
+        } else {
             console.log("Write successfull..");
-            
+
         }
     })
 
-    fs.readFile(uppercase_file, "utf-8", (err, result) =>{
+    fs.readFile(uppercase_file, "utf-8", (err, result) => {
         if (err) {
             console.log("Error: ", err);
-            
-        }else{
+
+        } else {
             console.log(result);
             convert_data_to_lowercase(result);
         }
     });
 
-   
+
 
 }
 
@@ -66,30 +66,60 @@ function convert_data_to_lowercase(file) {
 
     const sentences = lowercase_file.split(/(?<=[.!?])\s+/);
 
-    fs.writeFile(new_lowercase_file, sentences.join('\n'), (err) =>{
+    fs.writeFile(new_lowercase_file, sentences.join('\n'), (err) => {
         if (err) {
             console.log("Error: ", err);
-            
-        }else{
+
+        } else {
             console.log("file written successfully...");
 
-            
+
         }
     });
 
-    fs.appendFile("/home/shubham/Desktop/JavaScript/callbacks/callbacks-drill/filenames.txt", '\n' + "lowerCase.txt " , (err) =>{
+    fs.appendFile("/home/shubham/Desktop/JavaScript/callbacks/callbacks-drill/filenames.txt", '\n' + "lowerCase.txt ", (err) => {
         if (err) {
             console.log(err);
-            
-        }else{
+
+        } else {
             console.log("Success....");
-            
+
         }
     })
-    
+
 }
 
-console.log(read_file());
+// console.log(read_file());
 
 // console.log(convert_data_to_lowercase());
 
+function sort_file_content() {
+
+    const new_file = "/home/shubham/Desktop/JavaScript/callbacks/callbacks-drill/lowerCase.txt";
+    const outputFile = "/home/shubham/Desktop/JavaScript/callbacks/callbacks-drill/sortedFile.txt";
+
+    fs.readFile(new_file, "utf-8",(err, file) => {
+        if (err) {
+            console.log(err);
+
+        }
+        let sentences = file.match(/[^.!?]+[.!?]+/g);;
+
+        if (!sentences) {
+            sentences = file.split('\n');
+        }
+
+        const sortedContent = sentences.sort().join(' ');
+
+    fs.writeFile(outputFile, sortedContent, (err) => {
+        if (err) {
+            return console.error('Error writing file:', err);
+        }
+        console.log(`Sorted content has been written to ${outputFile}`);
+    });
+
+
+    });
+}
+
+sortedContent();
