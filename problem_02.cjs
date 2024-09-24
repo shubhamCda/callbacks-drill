@@ -23,17 +23,29 @@ function convert__data_to_uppercase_and_write(res) {
     let uppercase_content = res.toUpperCase();
     // console.log(uppercase_content);
     
-    fs.writeFile("/home/shubham/Desktop/JavaScript/callbacks/callbacks-drill/filenames.txt", uppercase_content, (err, result) =>{
+    const uppercase_file = "/home/shubham/Desktop/JavaScript/callbacks/callbacks-drill/upperCase.txt"
+    fs.writeFile(uppercase_file, uppercase_content, (err, result) =>{
         if (err) {
             console.log("Error: ", err);
         }else{
             console.log(`write successfull...`);
+           
             
         }
         
     });
 
-    fs.readFile("/home/shubham/Desktop/JavaScript/callbacks/callbacks-drill/lipsum.txt", "utf-8", (err, result) =>{
+    fs.writeFile("/home/shubham/Desktop/JavaScript/callbacks/callbacks-drill/filenames.txt", "upperCase.txt", (err) =>{
+        if (err) {
+            console.log(err);
+            
+        }else{
+            console.log("Write successfull..");
+            
+        }
+    })
+
+    fs.readFile(uppercase_file, "utf-8", (err, result) =>{
         if (err) {
             console.log("Error: ", err);
             
@@ -50,17 +62,31 @@ function convert__data_to_uppercase_and_write(res) {
 function convert_data_to_lowercase(file) {
     const lowercase_file = file.toLowerCase();
 
+    const new_lowercase_file = "/home/shubham/Desktop/JavaScript/callbacks/callbacks-drill/lowerCase.txt";
+
     const sentences = lowercase_file.split(/(?<=[.!?])\s+/);
 
-    fs.writeFile("/home/shubham/Desktop/JavaScript/callbacks/callbacks-drill/filenames.txt", sentences.join('\n'), (err) =>{
+    fs.writeFile(new_lowercase_file, sentences.join('\n'), (err) =>{
         if (err) {
             console.log("Error: ", err);
             
         }else{
             console.log("file written successfully...");
+
+            
+        }
+    });
+
+    fs.appendFile("/home/shubham/Desktop/JavaScript/callbacks/callbacks-drill/filenames.txt", '\n' + "lowerCase.txt " , (err) =>{
+        if (err) {
+            console.log(err);
+            
+        }else{
+            console.log("Success....");
             
         }
     })
+    
 }
 
 console.log(read_file());
