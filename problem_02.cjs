@@ -1,125 +1,119 @@
 const fs = require("fs");
+const path = require("path");
+
+const input_file = path.join(__dirname, "lipsum.txt");
+ 
+const filenames = path.join(__dirname, "filenames.txt");
 
 
-// 1. Read the given file lipsum.txt
-function read_file() {
-
-    fs.readFile("/home/shubham/Desktop/JavaScript/callbacks/callbacks-drill/lipsum.txt", "utf-8", (err, result) => {
-        if (err) {
-            console.log("Error: ", err);
-
-        } else {
-            console.log(result);
-            convert__data_to_uppercase_and_write(result);
-        }
-    });
-
-
+function append_filenames(file, callback) {
+    fs.appendFile(filenames, file + '\n', callback)
 }
 
-// 2. Convert the content to uppercase & write to a new file. Store the name of the new file in filenames.txt
+function async_function() {
 
-function convert__data_to_uppercase_and_write(res) {
-    let uppercase_content = res.toUpperCase();
-    // console.log(uppercase_content);
-
-    const uppercase_file = "/home/shubham/Desktop/JavaScript/callbacks/callbacks-drill/upperCase.txt"
-    fs.writeFile(uppercase_file, uppercase_content, (err, result) => {
-        if (err) {
-            console.log("Error: ", err);
-        } else {
-            console.log(`write successfull...`);
-
-
-        }
-
-    });
-
-    fs.writeFile("/home/shubham/Desktop/JavaScript/callbacks/callbacks-drill/filenames.txt", "upperCase.txt", (err) => {
+    // 1. Read the given file lipsum.txt
+    fs.readFile(input_file, "utf-8", (err, result) =>{
         if (err) {
             console.log(err);
-
-        } else {
-            console.log("Write successfull..");
-
+            
         }
-    })
+        
+        // 2. Convert the content to uppercase & write to a new file: uppercase.txt. 
+        const uppercase_content = result.toUpperCase();
+        const uppercase_file = "uppercase.txt";
 
-    fs.readFile(uppercase_file, "utf-8", (err, result) => {
-        if (err) {
-            console.log("Error: ", err);
+        fs.writeFile(uppercase_file, uppercase_content, (err) =>{
+            if (err) {
+                console.log(err);
+                
+            }
+            // Store the name of the new file: uppercase.txt in filenames.txt
+            append_filenames(uppercase_file, (err) =>{
+                if (err) {
+                    console.log(err);
+                    
+                }
+                const lowercase_file = "lowercase.txt";
+                // 3. Read the new file: uppercase.txt and convert it to lower case.
+                fs.readFile(uppercase_file, "utf-8", (err, data_uppercase) =>{
+                    if (err) {
+                        console.log(err);
+                        
+                    }
+                    const lowercase_content = data_uppercase.toLowerCase();
 
-        } else {
-            console.log(result);
-            convert_data_to_lowercase(result);
-        }
-    });
+                    // split the contents into sentences.Then write it to a new file: lowercase.txt.
+                    const sentences = lowercase_content.match(/[^.!?]+[.!?]+/g) || lowerCaseContent.split('\n');
 
+                    fs.writeFile(lowercase_file, sentences.join(' '), (err) =>{
+                        if (err) {
+                            console.log(err);
+                            
+                        }
+                        // Store the name of the new file: lowercase.txt in filenames.txt
+                        append_filenames(lowercase_file, (err) =>{
+                            if (err) {
+                                console.log(err);
+                                
+                            }
+                            const sorted_file = "sorted.txt";
+                            // 4. Read the new files: lowercase.txt, sort the content, write it out to a new file: sorted.txt;.
+                            fs.readFile(lowercase_file, "utf-8", (err) =>{
+                                if (err) {
+                                    console.log(err);
+                                    
+                                }
 
+                                const sorted_content = lowercase_file.split(' ').sort().join(' ');
 
+                                fs.writeFile(sorted_file, sorted_content, (err) =>{
+                                    if (err) {
+                                        console.log(err);
+                                        
+                                    }
+
+                                    append_filenames(sorted_file, (err) =>{
+                                        if (err) {
+                                            console.log(err);
+                                            
+                                        }
+
+                                        // 5. Read the contents of filenames.txt and delete all the new files that are mentioned in that list simultaneously.
+
+                                        fs.readFile(filenames, "utf-8", (err, filename_content) =>{
+                                            if (err) {
+                                                console.log(err);
+                                                
+                                            }
+                                            const delete_file_data = filename_content.split('\n').filter(Boolean);
+
+                                            delete_file_data.forEach((file) =>{
+                                                fs.unlink(file, (err) =>{
+                                                    if (err) {
+                                                        console.log(`${err} deleting file: ${file}`);
+                                                        
+                                                    }else{
+                                                        console.log(`Deleted ${file} successfully...`);
+                                                        
+                                                    }
+                                                });
+                                            });
+                                        });
+
+                                    });
+                                });
+                            });
+                        });
+                    });
+                });
+
+            });
+        });
+
+        
+    });   
 }
 
-function convert_data_to_lowercase(file) {
-    const lowercase_file = file.toLowerCase();
+async_function()
 
-    const new_lowercase_file = "/home/shubham/Desktop/JavaScript/callbacks/callbacks-drill/lowerCase.txt";
-
-    const sentences = lowercase_file.split(/(?<=[.!?])\s+/);
-
-    fs.writeFile(new_lowercase_file, sentences.join('\n'), (err) => {
-        if (err) {
-            console.log("Error: ", err);
-
-        } else {
-            console.log("file written successfully...");
-
-
-        }
-    });
-
-    fs.appendFile("/home/shubham/Desktop/JavaScript/callbacks/callbacks-drill/filenames.txt", '\n' + "lowerCase.txt ", (err) => {
-        if (err) {
-            console.log(err);
-
-        } else {
-            console.log("Success....");
-
-        }
-    })
-
-}
-
-// console.log(read_file());
-
-// console.log(convert_data_to_lowercase());
-
-function sort_file_content() {
-
-    const new_file = "/home/shubham/Desktop/JavaScript/callbacks/callbacks-drill/lowerCase.txt";
-    const outputFile = "/home/shubham/Desktop/JavaScript/callbacks/callbacks-drill/sortedFile.txt";
-
-    fs.readFile(new_file, "utf-8",(err, file) => {
-        if (err) {
-            console.log(err);
-
-        }
-        let sentences = file.match(/[^.!?]+[.!?]+/g);;
-
-        if (!sentences) {
-            sentences = file.split('\n');
-        }
-
-        const sortedContent = sentences.sort().join(' ');
-
-    fs.writeFile(outputFile, sortedContent, (err) => {
-        if (err) {
-            return console.error('Error writing file:', err);
-        }
-        console.log(`Sorted content has been written to ${outputFile}`);
-    });
-
-
-    });
-}
-
-sortedContent();

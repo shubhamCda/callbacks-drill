@@ -1,2 +1,3 @@
-upperCase.txt
-lowerCase.txt 
+uppercase.txt
+lowercase.txt
+sorted.txt
