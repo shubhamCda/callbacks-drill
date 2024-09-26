@@ -75,4 +75,23 @@ function sort_content(sortFilePath, lowFile, callback) {
     });
 }
 
-module.exports = { read_source_files, convert_content_uppercase, append_filenames, convert_content_lowercase, sort_content };
+
+function delete_files(filesPath) {
+    fileReader(filesPath, (file) =>{
+        const rmFile = file.split('\n');
+
+        rmFile.map((link) =>{
+            fs.unlink(link, (err) =>{
+                if (err) {
+                    console.error(`Error while deleting file ${link}: ${err}`);
+                    
+                }else{
+                    console.log("Successfully deleted...!");
+                    
+                }
+            });
+        });
+    });
+}
+
+module.exports = { read_source_files, convert_content_uppercase, append_filenames, convert_content_lowercase, sort_content, delete_files };
