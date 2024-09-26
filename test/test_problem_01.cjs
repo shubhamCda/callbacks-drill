@@ -2,6 +2,10 @@
 
 
 
-const create_and_delete = require("../problem_01.cjs");
+const {make_directory,create_JSON_file, delete_JSON_file} = require("../problem_01.cjs");
 
-console.log(create_and_delete());
+make_directory(()=>{
+    create_JSON_file(5, (files)=>{
+        delete_JSON_file(files)
+    });
+});
