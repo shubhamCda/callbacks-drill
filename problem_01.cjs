@@ -1,41 +1,48 @@
 const fs = require("fs");
+const path = require("path");
 
+const folder = path.join(__dirname,"JSON_files");
 
-function make_directory() {
+function make_directory(callback) {
     
-    fs.mkdir("JSON_files", {recursive : true} ,(err) =>{
+    fs.mkdir(folder, {recursive : true} ,(err) =>{
         if (err) {
             console.log(`Error: ${err}`);
             
         }else{
             console.log("directory created successfully...");
-            create_JSON_file();
-            
+            callback();
         }
     })
+    
 }
 
 
-function create_JSON_file() {
-    fs.writeFile("./JSON_files/sample.json", "", (err) =>{
-        if (err) {
-            console.log(`Error: ${err}`);  
-        }else{
-            console.log("json file created successfully...");
-            delete_JSON_file();
-        }
-    })
+function create_JSON_file(count, cb) {
+    const files = [];
+
+    for (let index = 1; index <= count; index++) {
+        const json_file_path = path.join(folder, `JSON_file${index}.json`);
+        fs.writeFile(json_file_path,JSON.stringify({user: 'shubham'}), (err) => err);
+        
+        files.push(json_file_path)
+    }
+    cb(files);
 }
 
-function delete_JSON_file() {
-    fs.unlink("./JSON_files/sample.json", (err) =>{
-        if (err) {
-            console.log(`Error: ${err}`);
-        }else{
-            console.log("file deleted successfully...");
-            
-        }
+function delete_JSON_file(paths) {
+    
+    
+    paths.forEach(file => {
+        fs.unlink(file, (err) => {
+            if (err) {
+                console.error(err);
+            }else{
+                console.log("file deleted successfully....");
+                
+            }
+        })
     });
 }
 
-module.exports = make_directory;
+module.exports = {make_directory, create_JSON_file, delete_JSON_file};
