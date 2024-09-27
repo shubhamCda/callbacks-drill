@@ -39,7 +39,7 @@ function fileReader(path, callback) {
     })
 }
 
-function fileWriter(path, data, callback) {
+function file_writer(path, data, callback) {
     fs.writeFile(path, data, callback);
 }
 
@@ -49,7 +49,7 @@ function convert_content_lowercase(uppFile, lowFile, callback) {
     fileReader(uppFile, (data) => {
         const lowercase_content = data.toLowerCase();
         const sentences = lowercase_content.match(/[^.!?]+[.!?]+/g) || lowercase_content.split('\n');
-        fileWriter(lowFile, sentences.join(' '), (err) => {
+        file_writer(lowFile, sentences.join(' '), (err) => {
             if (err) {
                 console.error(`Error while storing data in file ${lowFile}: ${err}`);
 
@@ -65,7 +65,7 @@ function sort_content(sortFilePath, lowFile, callback) {
     fileReader(lowFile, (data) => {
         const sorted_content = data.split(" ").sort((a, b) => a.localeCompare(b)).join("\n");
 
-        fileWriter(sortFilePath, sorted_content, (err) => {
+        file_writer(sortFilePath, sorted_content, (err) => {
             if (err) {
                 console.error(`Error while storing file ${sortFilePath}: ${err}`);
 
