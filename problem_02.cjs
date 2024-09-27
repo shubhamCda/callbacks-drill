@@ -80,16 +80,19 @@ function delete_files(filesPath) {
     fileReader(filesPath, (file) => {
         const rmFile = file.split('\n');
 
-        rmFile.map((link) => {
-            fs.unlink(link, (err) => {
-                if (err) {
-                    console.error(`Error while deleting file ${link}: ${err}`);
-
-                } else {
-                    console.log("Successfully deleted...!");
-
-                }
-            });
+        rmFile.forEach(link => {
+            if (link !== '') {
+                
+                fs.unlink(link, (err) =>{
+                    if (err) {
+                        console.log(err);
+                        
+                    }else{
+                        console.log("Deleted successfully..!");
+                        
+                    }
+                });
+            }
         });
     });
 }
