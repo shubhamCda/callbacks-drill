@@ -18,7 +18,7 @@ function make_directory(callback) {
 }
 
 
-function create_JSON_file(count, cb) {
+function create_json_file(count, cb) {
     const files = [];
 
     for (let index = 1; index <= count; index++) {
@@ -30,7 +30,7 @@ function create_JSON_file(count, cb) {
     cb(files);
 }
 
-function delete_JSON_file(paths) {
+function delete_json_file(paths) {
 
 
     paths.forEach(file => {
@@ -45,4 +45,4 @@ function delete_JSON_file(paths) {
     });
 }
 
-module.exports = { make_directory, create_JSON_file, delete_JSON_file };
+module.exports = { make_directory, create_json_file, delete_json_file };
