@@ -40,7 +40,7 @@ function convert_content_uppercase(data, destinationPath, callback) {
             console.error(err);
 
         }
-        callback(path)
+        callback(destinationPath)
     });
 }
 
