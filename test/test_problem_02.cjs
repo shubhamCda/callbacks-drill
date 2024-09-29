@@ -9,12 +9,12 @@ const filenames_path = path.join(__dirname, "filenames.txt");
 
 
 
-const { read_source_files, convert_content_uppercase, append_filenames, convert_content_lowercase, sort_content, delete_files } = require("../problem_02.cjs");
+const { file_reader, convert_content_uppercase, append_filenames, convert_content_lowercase, sort_content, delete_files } = require("../problem_02.cjs");
 
 
 
 
-read_source_files(input_file_path, (data) => {
+file_reader(input_file_path, (data) => {
     convert_content_uppercase(data, uppercase_file_path, (filePath) => {
         append_filenames(filenames_path, filePath, () => {
             convert_content_lowercase(uppercase_file_path, lowercase_file_path, (filePath) => {

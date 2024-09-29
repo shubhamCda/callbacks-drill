@@ -1,22 +1,40 @@
 const fs = require("fs");
 const path = require("path");
 
+/*
+    Problem 2:
+    
+    Using callbacks and the fs module's asynchronous functions, do the following:
+       
+        
+         
+        
+*/
 
 
+// Store the name of the new file in filenames.txt
 function append_filenames(filenames, file, callback) {
     fs.appendFile(filenames, file + '\n', callback)
 }
 
-function read_source_files(input_file, callback) {
-    fs.readFile(input_file, "utf-8", (err, data) => {
+// 1. Read the given file lipsum.txt
+function file_reader(path, callback) {
+    fs.readFile(path, "utf-8", (err, data) => {
         if (err) {
             console.error(err);
 
         }
         callback(data);
-    });
+    })
 }
 
+
+function file_writer(path, data, callback) {
+    fs.writeFile(path, data, callback);
+}
+
+
+// 2. Convert the content to uppercase & write to a new file.
 function convert_content_uppercase(data, path, callback) {
     const uppercase_content = data.toUpperCase();
 
@@ -29,24 +47,12 @@ function convert_content_uppercase(data, path, callback) {
     });
 }
 
-function fileReader(path, callback) {
-    fs.readFile(path, "utf-8", (err, data) => {
-        if (err) {
-            console.error(err);
-
-        }
-        callback(data);
-    })
-}
-
-function file_writer(path, data, callback) {
-    fs.writeFile(path, data, callback);
-}
 
 
+// 3. Read the new file and convert it to lower case. Then split the contents into sentences.Then write it to a new file.
 function convert_content_lowercase(uppFile, lowFile, callback) {
 
-    fileReader(uppFile, (data) => {
+    file_reader(uppFile, (data) => {
         const lowercase_content = data.toLowerCase();
         const sentences = lowercase_content.match(/[^.!?]+[.!?]+/g) || lowercase_content.split('\n');
         file_writer(lowFile, sentences.join(' '), (err) => {
@@ -61,8 +67,10 @@ function convert_content_lowercase(uppFile, lowFile, callback) {
     });
 }
 
+
+// 4. Read the new files, sort the content, write it out to a new file.
 function sort_content(sortFilePath, lowFile, callback) {
-    fileReader(lowFile, (data) => {
+    file_reader(lowFile, (data) => {
         const sorted_content = data.split(" ").sort((a, b) => a.localeCompare(b)).join("\n");
 
         file_writer(sortFilePath, sorted_content, (err) => {
@@ -76,8 +84,9 @@ function sort_content(sortFilePath, lowFile, callback) {
 }
 
 
+// 5. Read the contents of filenames.txt and delete all the new files that are mentioned in that list simultaneously.
 function delete_files(filesPath) {
-    fileReader(filesPath, (file) => {
+    file_reader(filesPath, (file) => {
         const rmFile = file.split('\n');
 
         rmFile.forEach(link => {
@@ -97,4 +106,4 @@ function delete_files(filesPath) {
     });
 }
 
-module.exports = { read_source_files, convert_content_uppercase, append_filenames, convert_content_lowercase, sort_content, delete_files };
+module.exports = { file_reader, convert_content_uppercase, append_filenames, convert_content_lowercase, sort_content, delete_files };
