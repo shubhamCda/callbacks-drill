@@ -3,11 +3,8 @@ const path = require("path");
 
 /*
     Problem 2:
-    
-    Using callbacks and the fs module's asynchronous functions, do the following:
-       
-        
-         
+    Using callbacks and the fs module's asynchronous functions.   
+           
         
 */
 
