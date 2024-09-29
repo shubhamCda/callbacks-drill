@@ -15,8 +15,8 @@ function append_filenames(filenames, file, callback) {
 }
 
 // 1. Read the given file lipsum.txt
-function file_reader(path, callback) {
-    fs.readFile(path, "utf-8", (err, data) => {
+function file_reader(sourcePath, callback) {
+    fs.readFile(sourcePath, "utf-8", (err, data) => {
         if (err) {
             console.error(err);
 
@@ -26,16 +26,16 @@ function file_reader(path, callback) {
 }
 
 
-function file_writer(path, data, callback) {
-    fs.writeFile(path, data, callback);
+function file_writer(destinationPath, data, callback) {
+    fs.writeFile(destinationPath, data, callback);
 }
 
 
 // 2. Convert the content to uppercase & write to a new file.
-function convert_content_uppercase(data, path, callback) {
+function convert_content_uppercase(data, destinationPath, callback) {
     const uppercase_content = data.toUpperCase();
 
-    fs.writeFile(path, uppercase_content, (err) => {
+    fs.writeFile(destinationPath, uppercase_content, (err) => {
         if (err) {
             console.error(err);
 
