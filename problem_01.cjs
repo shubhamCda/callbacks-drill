@@ -3,6 +3,16 @@ const path = require("path");
 
 const folder = path.join(__dirname, "JSON_files");
 
+
+/*
+    Problem 1:
+    
+    Using callbacks and the fs module's asynchronous functions, do the following:
+        1. Create a directory of random JSON files
+        2. Delete those files simultaneously 
+*/
+
+//function to create a directory using fs module.
 function make_directory(callback) {
 
     fs.mkdir(folder, { recursive: true }, (err) => {
@@ -18,6 +28,7 @@ function make_directory(callback) {
 }
 
 
+//function to create random json files.
 function create_json_file(count, cb) {
     const files = [];
 
@@ -30,6 +41,9 @@ function create_json_file(count, cb) {
     cb(files);
 }
 
+
+
+//function will delete files.
 function delete_json_file(paths) {
 
 
