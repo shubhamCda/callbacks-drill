@@ -8,6 +8,32 @@ const path = require("path");
         
 */
 
+const input_file_path = path.join(__dirname, "lipsum.txt");
+const uppercase_file_path = path.join(__dirname, "upperCase.txt");
+const lowercase_file_path = path.join(__dirname, "lowerCase.txt");
+const sorted_file_path = path.join(__dirname, "sorted.txt");
+const filenames_path = path.join(__dirname, "filenames.txt");
+
+
+function problem_02_callbacks() {
+    file_reader(input_file_path, (data) => {
+        convert_content_uppercase(data, uppercase_file_path, (filePath) => {
+            append_filenames(filenames_path, filePath, () => {
+                convert_content_lowercase(uppercase_file_path, lowercase_file_path, (filePath) => {
+                    append_filenames(filenames_path, filePath, () => {
+                        sort_content(sorted_file_path, lowercase_file_path, (filePath) => {
+                            append_filenames(filenames_path, filePath, () => {
+                                delete_files(filenames_path);
+                            })
+                        })
+                    });
+                });
+            });
+        });
+
+    });
+}
+
 
 // Store the name of the new file in filenames.txt
 function append_filenames(filenames, file, callback) {
@@ -88,14 +114,14 @@ function delete_files(filesPath) {
 
         rmFile.forEach(link => {
             if (link !== '') {
-                
-                fs.unlink(link, (err) =>{
+
+                fs.unlink(link, (err) => {
                     if (err) {
                         console.log(err);
-                        
-                    }else{
+
+                    } else {
                         console.log("Deleted successfully..!");
-                        
+
                     }
                 });
             }
@@ -103,4 +129,6 @@ function delete_files(filesPath) {
     });
 }
 
-module.exports = { file_reader, convert_content_uppercase, append_filenames, convert_content_lowercase, sort_content, delete_files };
+module.exports = { problem_02_callbacks };
+
+
