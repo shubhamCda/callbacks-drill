@@ -2,10 +2,10 @@
 
 
 
-const { make_directory, create_json_file, delete_json_file } = require("../problem_01.cjs");
+const { create_and_delete } = require("../problem_01.cjs");
 
-make_directory(() => {
-    create_json_file(5, (files) => {
-        delete_json_file(files)
-    });
-});
+function main() {
+    create_and_delete();
+}
+
+main();
