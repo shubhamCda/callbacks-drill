@@ -13,6 +13,15 @@ const folder = path.join(__dirname, "JSON_files");
 */
 
 //function to create a directory using fs module.
+
+function create_and_delete() {
+    make_directory(() => {
+        create_json_file(5, (files) => {
+            delete_json_file(files)
+        });
+    });
+}
+
 function make_directory(callback) {
 
     fs.mkdir(folder, { recursive: true }, (err) => {
@@ -59,4 +68,5 @@ function delete_json_file(paths) {
     });
 }
 
-module.exports = { make_directory, create_json_file, delete_json_file };
+module.exports = { create_and_delete };
+
